@@ -1,0 +1,21 @@
+server:
+    port: 8083
+
+spring:
+    datasource:
+        url: jdbc:postgresql://localhost:5432/${PSQL_DATABASE}?currentSchema=operations_service
+        username: ${PSQL_USER}
+        password: ${PSQL_PASSWORD}
+    jpa:
+        properties:
+            hibernate:
+                default_schema: operations_service
+    kafka:
+        consumer:
+            group-id: operations-service
+
+app:
+    webhook:
+        delivery:
+            redis-key: "webhook-retry"
+            poll-batch-size: 100

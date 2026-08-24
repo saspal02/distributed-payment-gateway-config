@@ -1,0 +1,15 @@
+server:
+    port: 8084
+
+spring:
+    datasource:
+        url: jdbc:postgresql://localhost:5432/${PSQL_DATABASE}?currentSchema=vault_service
+        username: ${PSQL_USER}
+        password: ${PSQL_PASSWORD}
+    jpa:
+        properties:
+            hibernate:
+                default_schema: vault_service
+
+vault:
+    master-key: ${MASTER_KEY}

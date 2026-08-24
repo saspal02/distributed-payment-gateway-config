@@ -1,0 +1,15 @@
+server:
+    port: 8081
+
+spring:
+    datasource:
+        url: jdbc:postgresql://localhost:5432/${PSQL_DATABASE}?currentSchema=merchant_service
+        username: ${PSQL_USER}
+        password: ${PSQL_PASSWORD}
+    jpa:
+        properties:
+            hibernate:
+                default_schema: merchant_service
+
+jwt:
+    secret-key: ${JWT_SECRET}
