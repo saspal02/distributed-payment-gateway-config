@@ -9,7 +9,7 @@ spring:
     jpa:
         properties:
             hibernate:
-                default_schema: 
+                default_schema: vault_service
 
 vault:
     master-key: ${MASTER_KEY}
