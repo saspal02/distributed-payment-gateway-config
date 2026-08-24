@@ -3,13 +3,13 @@ server:
 
 spring:
     datasource:
-        url: jdbc:postgresql://localhost:5432/${PSQL_DATABASE}?currentSchema=vault_service
+        url: jdbc:postgresql://localhost:5432/${PSQL_DATABASE_VAULT}?currentSchema=vault_service
         username: ${PSQL_USER}
         password: ${PSQL_PASSWORD}
     jpa:
         properties:
             hibernate:
-                default_schema: vault_service
+                default_schema: 
 
 vault:
     master-key: ${MASTER_KEY}

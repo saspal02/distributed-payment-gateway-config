@@ -3,7 +3,7 @@ server:
 
 spring:
     datasource:
-        url: jdbc:postgresql://localhost:5432/${PSQL_DATABASE}?currentSchema=payment_service
+        url: jdbc:postgresql://localhost:5432/${PSQL_DATABASE_PAYMENT}?currentSchema=payment_service
         username: ${PSQL_USER}
         password: ${PSQL_PASSWORD}
     jpa:
