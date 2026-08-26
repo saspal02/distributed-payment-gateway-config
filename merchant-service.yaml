@@ -14,5 +14,5 @@ spring:
 jwt:
     secret-key: ${JWT_SECRET}
 
-webhoook:
+webhook:
   secret-encryption-key: ${WEBHOOK_SECRET}
