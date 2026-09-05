@@ -1,31 +1,71 @@
 server:
-    port: 8083
+  port: 8083
 
 spring:
-    datasource:
-        url: jdbc:postgresql://localhost:5432/${PSQL_DATABASE_PAYMENT}?currentSchema=payment_service
-        username: ${PSQL_USER}
-        password: ${PSQL_PASSWORD}
-    jpa:
-        properties:
-            hibernate:
-                default_schema: payment_service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/${PSQL_DATABASE_PAYMENT}?currentSchema=payment_service
+    username: ${PSQL_USER}
+    password: ${PSQL_PASSWORD}
+
+  jpa:
+    properties:
+      hibernate:
+        default_schema: payment_service
 
 payment:
-    simulator:
-        # monolith had "poll-intercal-ms" (typo) and "method" — neither ever bound
-        poll-interval-ms: 5000
-        chaos-mode: NORMAL
-        methods:
-            CARD:
-                min-delay-seconds: 2
-                max-delay-second: 6
-                success-rate: 90
-            UPI:
-                min-delay-seconds: 1
-                max-delay-second: 3
-                success-rate: 95
-            NET-BANKING:
-                min-delay-seconds: 4
-                max-delay-second: 10
-                success-rate: 80
+  simulator:
+    poll-interval-ms: 5000
+    chaos-mode: NORMAL
+
+    methods:
+      CARD:
+        min-delay-seconds: 2
+        max-delay-second: 6
+        success-rate: 90
+
+      UPI:
+        min-delay-seconds: 1
+        max-delay-second: 3
+        success-rate: 95
+
+      NET-BANKING:
+        min-delay-seconds: 4
+        max-delay-second: 10
+        success-rate: 80
+
+cloud:
+  openfeign:
+    client:
+      config:
+        merchant-service:
+          connectTimeout: 2000
+          readTimeout: 3000
+
+        vault-service:
+          connectTimeout: 2000
+          readTimeout: 5000
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      merchant-service:
+        sliding-window-size: 10
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10s
+        permitted-number-of-calls-in-half-open-state: 3
+
+      vault-service:
+        sliding-window-size: 10
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 15s
+        permitted-number-of-calls-in-half-open-state: 3
+
+  retry:
+    instances:
+      merchant-service:
+        max-attempts: 3
+        wait-duration: 500ms
+
+      vault-service:
+        max-attempts: 2
+        wait-duration: 500ms
