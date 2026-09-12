@@ -1,13 +1,19 @@
-# Shared defaults for every service. Overridden by <service-name>.yaml
-eureka:
-    client:
-        serviceUrl:
-            defaultZone: ${EUREKA_URI:http://localhost:8761/eureka/}
-    instance:
-        prefer-ip-address: true
-
 spring:
+    threads:
+        virtual:
+            enabled: true
+
+    jpa:
+        hibernate:
+            ddl-auto: update
+        show-sql: true
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.PostgreSQLDialect
+
     datasource:
+        hikari:
+            maximum-pool-size: ${HIKARI_MAX_POOL_SIZE:50}
         driver-class-name: org.postgresql.Driver
 
     data:
@@ -15,14 +21,6 @@ spring:
             host: ${REDIS_HOST:localhost}
             port: ${REDIS_PORT:6379}
             password: ${REDIS_PASSWORD}
-
-    jpa:
-        hibernate:
-            ddl-auto: create
-        show-sql: true
-        properties:
-            hibernate:
-                dialect: org.hibernate.dialect.PostgreSQLDialect
 
     kafka:
         # compose advertises localhost:9092 (was 29092 in the monolith setup)
@@ -37,6 +35,7 @@ spring:
                 retries: 3
                 spring.json.add.type.headers: false
         consumer:
+            group-id: ${KAFKA_CONSUMER_GROUP:razorpay-clone-group}
             auto-offset-reset: earliest
             enable-auto-commit: false
             key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
@@ -46,16 +45,48 @@ spring:
                 spring.json.use.type.headers: false
                 spring.json.value.default.type: java.util.LinkedHashMap
 
-    threads:
-        virtual:
+eureka:
+    client:
+        serviceUrl:
+            defaultZone: ${EUREKA_URI:http://localhost:8761/eureka/}
+    instance:
+        prefer-ip-address: true
+        hostname: ${EUREKA_HOST:localhost}
+
+management:
+    endpoints:
+        web:
+            exposure:
+                include: health,info,prometheus
+    tracing:
+        sampling:
+            probability: 0.1
+    zipkin:
+        tracing:
+            endpoint: ${ZIPKIN_URI:http://localhost:9411/api/v2/spans}
+    metrics:
+        tags:
+            application: ${spring.application.name}
+
+feign:
+    httpclient:
+        hc5:
             enabled: true
+    client:
+        config:
+            default:
+                connectTimeout: 5000
+                readTimeout: 5000
+
+logging:
+    level:
+        org.apache.kafka.clients: WARN
+        org.apache.kafka.common: WARN
+        zipkin2.reporter: DEBUG
+        org.springframework.boot.zipkin: DEBUG
+        io.micrometer.tracing: DEBUG
 
 app:
-    rate-limit:
-        method: fixed
-        use-case:
-            api-key:
-                requests-per-minute: 200
     kafka:
         topics:
             # singular keys: used by KafkaProperties.topicFor(EventAggregateType)

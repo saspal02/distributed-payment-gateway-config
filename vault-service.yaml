@@ -7,11 +7,6 @@ spring:
     username: ${PSQL_USER}
     password: ${PSQL_PASSWORD}
 
-  jpa:
-    properties:
-      hibernate:
-        default_schema: vault_service
-
 vault:
   master-key: ${MASTER_KEY}
 
