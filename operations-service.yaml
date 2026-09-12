@@ -20,12 +20,6 @@ spring:
             connectTimeout: 2000
             readTimeout: 5000
 
-app:
-  webhook:
-    delivery:
-      redis-key: webhook-retry
-      poll-batch-size: 100
-
 resilience4j:
   circuitbreaker:
     instances:
@@ -47,3 +41,9 @@ resilience4j:
       payment-service:
         max-attempts: 3
         wait-duration: 500ms
+
+app:
+  webhook:
+    delivery:
+      redis-key: webhook-retry
+      poll-batch-size: 100

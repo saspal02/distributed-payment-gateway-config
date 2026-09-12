@@ -17,27 +17,6 @@ spring:
             connectTimeout: 2000
             readTimeout: 5000
 
-payment:
-  simulator:
-    poll-interval-ms: 5000
-    chaos-mode: NORMAL
-
-    methods:
-      CARD:
-        min-delay-seconds: 2
-        max-delay-second: 6
-        success-rate: 90
-
-      UPI:
-        min-delay-seconds: 1
-        max-delay-second: 3
-        success-rate: 95
-
-      NET-BANKING:
-        min-delay-seconds: 4
-        max-delay-second: 10
-        success-rate: 80
-
 resilience4j:
   circuitbreaker:
     instances:
@@ -59,3 +38,24 @@ resilience4j:
       vault-service:
         max-attempts: 2
         wait-duration: 500ms
+
+payment:
+  simulator:
+    poll-interval-ms: 5000
+    chaos-mode: NORMAL
+
+    methods:
+      CARD:
+        min-delay-seconds: 2
+        max-delay-second: 6
+        success-rate: 90
+
+      UPI:
+        min-delay-seconds: 1
+        max-delay-second: 3
+        success-rate: 95
+
+      NET-BANKING:
+        min-delay-seconds: 4
+        max-delay-second: 10
+        success-rate: 80
