@@ -11,16 +11,16 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
   datasource:
     hikari:
-      maximum-pool-size: ${HIKARI_MAX_POOL_SIZE:50}
+      maximum-pool-size: 50
     driver-class-name: org.postgresql.Driver
   data:
     redis:
-      host: ${REDIS_HOST:localhost}
-      port: ${REDIS_PORT:6379}
+      host: localhost
+      port: 6379
       password: ${REDIS_PASSWORD}
   kafka:
     # compose advertises localhost:9092 (was 29092 in the monolith setup)
-    bootstrap-servers: ${KAFKA_BROKERS:localhost:9092}
+    bootstrap-servers: localhost:9092
     producer:
       ack-mode: manual
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
@@ -31,7 +31,7 @@ spring:
         retries: 3
         spring.json.add.type.headers: false
     consumer:
-      group-id: ${KAFKA_CONSUMER_GROUP:razorpay-clone-group}
+      group-id: razorpay-clone-group
       auto-offset-reset: earliest
       enable-auto-commit: false
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
@@ -44,10 +44,10 @@ spring:
 eureka:
   client:
     serviceUrl:
-      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka/}
+      defaultZone: http://localhost:8761/eureka/
   instance:
     prefer-ip-address: true
-    hostname: ${EUREKA_HOST:localhost}
+    hostname: localhost
 
 management:
   endpoints:
@@ -59,7 +59,7 @@ management:
       probability: 0.1
   zipkin:
     tracing:
-      endpoint: ${ZIPKIN_URI:http://localhost:9411/api/v2/spans}
+      endpoint: http://localhost:9411/api/v2/spans
   metrics:
     tags:
       application: ${spring.application.name}
