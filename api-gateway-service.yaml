@@ -42,3 +42,13 @@ spring:
 
 jwt:
   secret-key: ${JWT_SECRET}
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: k8s
+
+jwt:
+  secret-key: ${JWT_SECRET}

@@ -19,21 +19,17 @@ spring:
       port: 6379
       password: ${REDIS_PASSWORD}
   kafka:
-    # compose advertises localhost:9092 (was 29092 in the monolith setup)
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: localhost:29092
     producer:
-      ack-mode: manual
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       properties:
-        enable.idempotence: true
-        max.in.flight.requests.per.connection: 5
-        retries: 3
         spring.json.add.type.headers: false
     consumer:
       group-id: razorpay-clone-group
       auto-offset-reset: earliest
       enable-auto-commit: false
+      ack-mode: manual
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
@@ -85,13 +81,43 @@ logging:
 app:
   kafka:
     topics:
-      # singular keys: used by KafkaProperties.topicFor(EventAggregateType)
       payment: payments.events
       order: orders.events
       refund: refund.events
       settlement: settlement.events
-      # plural keys: used by operations-service @KafkaListener placeholders
-      payments: payments.events
-      orders: orders.events
-      refunds: refund.events
-      settlements: settlement.events
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: k8s
+  data:
+    redis:
+      host: redis.razorpay-core.svc.cluster.local
+      port: 6379
+  kafka:
+    bootstrap-servers: kafka.razorpay-core.svc.cluster.local:9092
+  cloud:
+    discovery:
+      enabled: false
+  task:
+    scheduling:
+      pool:
+        size: 4
+
+eureka:
+  client:
+    enabled: false
+    register-with-eureka: false
+    fetch-registry: false
+
+management:
+  zipkin:
+    tracing:
+      endpoint: http://zipkin.razorpay-core.svc.cluster.local:9411/api/v2/spans
+
+MERCHANT_SERVICE_URI: http://merchant-service
+PAYMENT_SERVICE_URI: http://payment-service
+VAULT_SERVICE_URI: http://vault-service
+OPERATIONS_SERVICE_URI: http://operations-service

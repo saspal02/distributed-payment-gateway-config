@@ -1,9 +1,9 @@
 server:
-  port: 8083
+  port: 9020
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/pg-payment-db?currentSchema=payment_service
+    url: jdbc:postgresql://localhost:5432/razorpay-payment-db
     username: ${PSQL_USER}
     password: ${PSQL_PASSWORD}
   cloud:
@@ -47,15 +47,26 @@ payment:
     methods:
       CARD:
         min-delay-seconds: 2
-        max-delay-second: 6
+        max-delay-seconds: 6
         success-rate: 90
 
       UPI:
         min-delay-seconds: 1
-        max-delay-second: 3
+        max-delay-seconds: 3
         success-rate: 95
 
       NET-BANKING:
         min-delay-seconds: 4
-        max-delay-second: 10
+        max-delay-seconds: 10
         success-rate: 80
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: k8s
+  datasource:
+    url: jdbc:postgresql://postgres.razorpay-core.svc.cluster.local:5432/razorpay-payment-db
+    username: payment_user
+    password: ${PAYMENT_DB_PASSWORD}

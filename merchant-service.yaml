@@ -1,9 +1,9 @@
 server:
-  port: 8081
+  port: 9010
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/pg-merchant-db?currentSchema=merchant_service
+    url: jdbc:postgresql://localhost:5432/razorpay-merchant-db
     username: ${PSQL_USER}
     password: ${PSQL_PASSWORD}
 
@@ -12,3 +12,20 @@ jwt:
 
 webhook:
   secret-encryption-key: ${WEBHOOK_SECRET}
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: k8s
+  datasource:
+    url: jdbc:postgresql://postgres.razorpay-core.svc.cluster.local:5432/razorpay-merchant-db
+    username: merchant_user
+    password: ${MERCHANT_DB_PASSWORD}
+
+jwt:
+  secret-key: ${JWT_SECRET}
+
+webhook:
+  secret-encryption-key: ${WEBHOOK_SECRET_ENCRYPTION_KEY}
