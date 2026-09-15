@@ -8,7 +8,7 @@ spring:
     password: ${PSQL_PASSWORD}
 
 vault:
-  master-key: ${MASTER_KEY}
+  master-key: ${VAULT_MASTER_KEY}
 
 resilience4j:
   thread-pool-bulkhead:
