@@ -28,4 +28,4 @@ jwt:
   secret-key: ${JWT_SECRET}
 
 webhook:
-  secret-encryption-key: ${WEBHOOK_SECRET_ENCRYPTION_KEY}
+  secret-encryption-key: ${WEBHOOK_SECRET}
