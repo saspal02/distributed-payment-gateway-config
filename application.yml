@@ -26,14 +26,14 @@ spring:
       properties:
         spring.json.add.type.headers: false
     consumer:
-      group-id: razorpay-clone-group
+      group-id: paygrid-clone-group
       auto-offset-reset: earliest
       enable-auto-commit: false
       ack-mode: manual
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
-        spring.json.trusted.packages: "com.saswat.razorpay.*"
+        spring.json.trusted.packages: "com.saswat.paygrid.*"
         spring.json.use.type.headers: false
         spring.json.value.default.type: java.util.LinkedHashMap
 
@@ -104,10 +104,10 @@ spring:
       on-profile: k8s
   data:
     redis:
-      host: redis.razorpay-core.svc.cluster.local
+      host: redis.paygrid-core.svc.cluster.local
       port: 6379
   kafka:
-    bootstrap-servers: kafka.razorpay-core.svc.cluster.local:9092
+    bootstrap-servers: kafka.paygrid-core.svc.cluster.local:9092
   cloud:
     discovery:
       enabled: false
@@ -125,7 +125,7 @@ eureka:
 management:
   zipkin:
     tracing:
-      endpoint: http://zipkin.razorpay-core.svc.cluster.local:9411/api/v2/spans
+      endpoint: http://zipkin.paygrid-core.svc.cluster.local:9411/api/v2/spans
 
 MERCHANT_SERVICE_URI: http://merchant-service
 PAYMENT_SERVICE_URI: http://payment-service

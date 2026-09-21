@@ -3,7 +3,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/razorpay-operations-db
+    url: jdbc:postgresql://localhost:5432/paygrid-operations-db
     username: ${PSQL_USER}
     password: ${PSQL_PASSWORD}
   cloud:
@@ -56,6 +56,6 @@ spring:
     activate:
       on-profile: k8s
   datasource:
-    url: jdbc:postgresql://postgres.razorpay-core.svc.cluster.local:5432/razorpay-operations-db
+    url: jdbc:postgresql://postgres.paygrid-core.svc.cluster.local:5432/paygrid-operations-db
     username: operations_user
     password: ${OPERATIONS_DB_PASSWORD}

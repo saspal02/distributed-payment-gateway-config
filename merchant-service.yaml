@@ -9,7 +9,7 @@ app:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/razorpay-merchant-db
+    url: jdbc:postgresql://localhost:5432/paygrid-merchant-db
     username: ${PSQL_USER}
     password: ${PSQL_PASSWORD}
 
@@ -26,7 +26,7 @@ spring:
     activate:
       on-profile: k8s
   datasource:
-    url: jdbc:postgresql://postgres.razorpay-core.svc.cluster.local:5432/razorpay-merchant-db
+    url: jdbc:postgresql://postgres.paygrid-core.svc.cluster.local:5432/paygrid-merchant-db
     username: merchant_user
     password: ${MERCHANT_DB_PASSWORD}
 
