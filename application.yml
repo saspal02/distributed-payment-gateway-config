@@ -86,6 +86,16 @@ app:
       refund: refund.events
       settlement: settlement.events
 
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: alpha
+    tags-sorter: alpha
+    doc-expansion: list
+    display-request-duration: true
+    persist-authorization: true
+    try-it-out-enabled: true
+
 ---
 
 spring:

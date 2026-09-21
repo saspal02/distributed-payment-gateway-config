@@ -2,6 +2,10 @@ server:
   port: 8080
 
 app:
+  openapi:
+    title: API Gateway
+    description: Aggregated API documentation for all downstream services
+    version: v1
   security:
     trust-inbound-headers: false
     public-routes:
@@ -42,6 +46,18 @@ spring:
 
 jwt:
   secret-key: ${JWT_SECRET}
+
+springdoc:
+  swagger-ui:
+    urls:
+      - name: merchant-service
+        url: /merchant-service/v3/api-docs
+      - name: payment-service
+        url: /payment-service/v3/api-docs
+      - name: vault-service
+        url: /vault-service/v3/api-docs
+      - name: operations-service
+        url: /operations-service/v3/api-docs
 
 ---
 

@@ -1,6 +1,12 @@
 server:
   port: 9040
 
+app:
+  openapi:
+    title: Vault Service
+    description: Card vault and charge API
+    version: v1
+
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/razorpay-vault-db

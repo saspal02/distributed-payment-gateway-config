@@ -60,6 +60,12 @@ payment:
         max-delay-seconds: 10
         success-rate: 80
 
+app:
+  openapi:
+    title: Payment Service
+    description: Orders and payments API
+    version: v1
+
 ---
 
 spring:

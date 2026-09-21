@@ -1,6 +1,12 @@
 server:
   port: 9010
 
+app:
+  openapi:
+    title: Merchant Service
+    description: Merchant onboarding and authentication API
+    version: v1
+
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/razorpay-merchant-db

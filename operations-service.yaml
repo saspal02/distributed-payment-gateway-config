@@ -40,6 +40,10 @@ resilience4j:
         wait-duration: 500ms
 
 app:
+  openapi:
+    title: Operations Service
+    description: Webhooks and operations API
+    version: v1
   webhook:
     delivery:
       redis-key: "webhook-retry"
